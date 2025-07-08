@@ -1,34 +1,54 @@
 import React from 'react';
 
-/**
- * Displays and manages the list of banned attributes
- * @param {Object} props - Component props
- * @param {Array} props.banList - Array of banned attributes
- * @param {Function} props.onRemoveBan - Callback for removing bans
- */
 const BanList = ({ banList, onRemoveBan }) => {
   return (
     <div className="ban-list-section">
       <h2>Ban List</h2>
-      <p>Select an attribute in your listing to ban it</p>
+      <p>Banned items won't appear in future discoveries</p>
       
-      {banList.length === 0 ? (
-        <p className="empty-message">No attributes banned yet</p>
-      ) : (
-        <ul className="ban-list-items">
-          {banList.map((item, index) => (
-            <li 
-              key={index} 
-              className="ban-item"
-              onClick={() => onRemoveBan(item)}
-              title="Click to remove ban"
-            >
-              {item}
-              <span className="remove-btn">×</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="ban-list-container">
+        <div className="ban-list-category">
+          <h3>Banned Breeds</h3>
+          {banList.breeds.length === 0 ? (
+            <p className="empty">No banned breeds</p>
+          ) : (
+            <ul>
+              {banList.breeds.map((breed, i) => (
+                <li key={`breed-${i}`}>
+                  {breed}
+                  <button 
+                    onClick={() => onRemoveBan('breeds', breed)}
+                    title="Remove ban"
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        
+        <div className="ban-list-category">
+          <h3>Banned Origins</h3>
+          {banList.origins.length === 0 ? (
+            <p className="empty">No banned origins</p>
+          ) : (
+            <ul>
+              {banList.origins.map((origin, i) => (
+                <li key={`origin-${i}`}>
+                  {origin}
+                  <button 
+                    onClick={() => onRemoveBan('origins', origin)}
+                    title="Remove ban"
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
