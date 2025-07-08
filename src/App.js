@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Header from './components/Header';
 import CatCard from './components/CatCard';
 import BanList from './components/BanList';
+import History from './components/History';
 import './App.css';
 
 function App() {
   // State management
   const [currentCat, setCurrentCat] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [banList, setBanList] = useState({
     origins: [],
     breeds: []
   });
+  const [history, setHistory] = useState([]);
 
   // API configuration
   const API_KEY = process.env.REACT_APP_CAT_API_KEY;
@@ -52,14 +54,16 @@ function App() {
         const cat = response.data[0];
         if (cat?.breeds?.length > 0 && !isCatBanned(cat)) {
           const breed = cat.breeds[0];
-          setCurrentCat({
+          const newCat = {
             imageUrl: cat.url,
             name: breed.name,
             weight: breed.weight?.imperial || 'N/A',
             origin: breed.origin || 'Unknown',
             lifeSpan: breed.life_span || 'N/A',
             temperament: breed.temperament || 'N/A'
-          });
+          };
+          setCurrentCat(newCat);
+          setHistory(prev => [...prev, newCat].slice(-10)); // Keep last 10 entries
           return;
         }
         attempts++;
@@ -98,11 +102,6 @@ function App() {
     }));
   };
 
-  // Initial fetch and refetch when ban list changes
-  useEffect(() => {
-    fetchRandomCat();
-  }, [banList]);
-
   return (
     <div className="App">
       <Header />
@@ -127,6 +126,8 @@ function App() {
           banList={banList} 
           onRemoveBan={handleRemoveBan}
         />
+        
+        <History history={history} />
       </main>
     </div>
   );

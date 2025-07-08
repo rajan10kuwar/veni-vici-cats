@@ -221,3 +221,43 @@
     grid-template-columns: 1fr;
   }
 }
+/* ============ HISTORY SECTION ============ */
+.history-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--gray-border);
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--gray-light);
+  border-radius: 8px;
+  border: 1px solid var(--gray-border);
+  margin-bottom: 1rem;
+}
+
+.history-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.history-info {
+  flex-grow: 1;
+}
+
+.history-info p {
+  margin: 0.2rem 0;
+  color: var(--gray-text);
+}

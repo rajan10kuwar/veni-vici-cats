@@ -1,9 +1,10 @@
+
 import React from 'react';
 
 const CatCard = ({ cat, loading, error, onBanBreed, onBanOrigin }) => {
   if (loading) return <div className="loading"> Finding your perfect cat...</div>;
   if (error) return <div className="error"> {error}</div>;
-  if (!cat) return <div className="no-cat">No cats found. Try adjusting preferences.</div>;
+  if (!cat) return <div className="no-cat">No cats found. Hit the button below.</div>;
 
   return (
     <div className="cat-card">
